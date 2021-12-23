@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Star Admin2 </title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="../../vendors/feather/feather.css">
+  <link rel="stylesheet" href="../../vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="../../vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="../../vendors/typicons/typicons.css">
+  <link rel="stylesheet" href="../../vendors/simple-line-icons/css/simple-line-icons.css">
+  <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="../../vendors/select2/select2.min.css">
+  <link rel="stylesheet" href="../../vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="../../css/vertical-layout-light/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="../../images/favicon.png" />
+</head>
+
+<body>
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper">      
+      <div class="main-panel">
+        <div class="row" style="justify-content: center;">
+          <div class="col-md-6 grid-margin stretch-card" style="padding-left: 7cm;">
+            <div class="card" >
+              <div class="card-body" >
+                <h4 class="card-title">Login form</h4>
+                <p class="card-description">
+                  Login details
+                </p>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                  </div>
+                  <button class="btn btn-primary me-2" onclick="submit()">Submit</button>
+                  <button class="btn btn-light">Cancel</button>
+              
+              </div>
+            </div>
+          </div>          
+        </div>                
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  
+</body>
+<script>
+  function submit(){
+    let username = document.getElementById('exampleInputEmail1').value;
+    let password = document.getElementById('exampleInputPassword1').value;
+
+    fetch("http://localhost:8080/login", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username,password
+      })
+    }).then(data=>{
+      if(data.status == 200){
+        return data.text();
+      }else{
+        alert("Invalid username or password");
+      }
+    }).then(data=>{
+      data = JSON.parse(data);
+      if(data.jwt){
+        // console.log(data);
+        localStorage.setItem("jwt",data.jwt);
+        window.location="../../index.html";
+        
+      }
+      else{
+        alert("Invalid username or password");
+      }
+    })
+  }
+</script>
+</html>

@@ -89,12 +89,12 @@
       return data.text();
     }).then(res=>{
       res = JSON.parse(res);
-      if(res.username==username && res.password==password){
+      if(res.username&& res.password){
         alert("Successfully Registered");
         window.location.href = "login.html";
       }
       else{
-        alert("Registration Failed");
+        alert(res.message);
       }
     });
   }

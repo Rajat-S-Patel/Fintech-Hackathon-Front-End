@@ -1,0 +1,32 @@
+{
+  "finance": {
+    "result": [
+      {
+        "symbol": "RELIANCE.NS",
+        "recommendedSymbols": [
+          {
+            "symbol": "TCS.NS",
+            "score": 0.208
+          },
+          {
+            "symbol": "ICICIBANK.NS",
+            "score": 0.202564
+          },
+          {
+            "symbol": "HDFCBANK.NS",
+            "score": 0.200881
+          },
+          {
+            "symbol": "SBIN.NS",
+            "score": 0.198696
+          },
+          {
+            "symbol": "LT.NS",
+            "score": 0.192377
+          }
+        ]
+      }
+    ],
+    "error": null
+  }
+}

@@ -1,9 +1,5 @@
-async function basic_value(){
-
-    fetch("./js/reliance.json")
-    .then(response => response.json())
-    .then(data => {
-        
+function setData(data){
+        console.log('data',data["quoteResponse"]);
         document.getElementById("stock-name").innerHTML = data["quoteResponse"]["result"][0]["longName"];
         document.getElementById("stock-price").innerHTML = data["quoteResponse"]["result"][0]["regularMarketPrice"]; 
         document.getElementById("stock-percentage").innerHTML = data["quoteResponse"]["result"][0]["regularMarketChange"].toFixed(2);
@@ -21,7 +17,6 @@ async function basic_value(){
         document.getElementById("market-close").innerHTML = data["quoteResponse"]["result"][0]["regularMarketPreviousClose"];
         document.getElementById("two-hundred-day-range").innerHTML = data["quoteResponse"]["result"][0]["twoHundredDayAverage"];
         document.getElementById("market-volume").innerHTML = data["quoteResponse"]["result"][0]["regularMarketVolume"];
-    });
 
 }
 
@@ -38,20 +33,34 @@ async function recommedation_value(){
 
 }
 
-function get_news(){
-    fetch("./js/newsresponse.json")
-    .then(response => response.json())
-    .then(data => {
-        console.log(data["data"][0]);
-        document.getElementById("news-1-title").innerHTML = data["data"][0]["title"];
-        document.getElementById("news-2-title").innerHTML = data["data"][1]["title"];
-        document.getElementById("news-3-title").innerHTML = data["data"][2]["title"];
-        document.getElementById("news-1-img").src = data["data"][0]["image_url"];
-        document.getElementById("news-2-img").src = data["data"][1]["image_url"];
-        document.getElementById("news-3-img").src = data["data"][2]["image_url"];
-    })
+function setNews(data){
+    let table = document.getElementById('news-table');
+    for(let news of data["news"]){
+        let row = document.createElement("tr");
+        
+        row.innerHTML = `<td id="${news.uuid}">
+
+        <div class="d-flex news-div" onclick="window.open('${news.url}','_blank')">
+        <img  src="${news['imageUrl']}" style="padding-right: 5px;">
+          <p  >${news['title']}</p>
+        <div>
+          
+      </td>`
+      table.appendChild(row);
+    }
+    
 }
 
-basic_value();
-recommedation_value();
-get_news();
+function setMoreInfo(data){
+    document.getElementById("market-cap").value=data["marketCap"];
+    document.getElementById("ask-price").value=data["ask"];
+    document.getElementById("market-open").value=data["regularMarketOpen"];
+    document.getElementById("fifty-day-range").value=data["fiftyDayAverage"];
+    document.getElementById("pe-ratio").value=data["trailingPE"];
+    document.getElementById("no-of-share").value=data["sharesOutstanding"];
+    document.getElementById("bid-price").value=data["bid"];
+    document.getElementById("market-close").value=data["regularMarketPreviousClose"];
+    document.getElementById("two-hundred-day-range").value=data["twoHundredDayAverage"];
+    document.getElementById("market-volume").value=data["regularMarketVolume"];
+    
+}

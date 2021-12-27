@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Star Admin2 </title>
+  <title>Stock Details</title>
   <!-- plugins:css -->
   <link rel="stylesheet" href="vendors/feather/feather.css">
   <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css">
@@ -23,6 +23,12 @@
   <!-- endinject -->
   <link rel="shortcut icon" href="images/favicon.png" />
 </head>
+<style>
+  .news-div:hover{
+    color: darkblue;
+    background-color: aliceblue;
+  }
+</style>
 <body>
   <div class="container-scroller">
     
@@ -361,36 +367,9 @@
                                   </div>
                                 </div>
                                 <div class="table-responsive">
-                                  <table class="table">
+                                  <table class="table" id = "news-table">
                                     <tbody>
-                                      <tr>
-                                        <td id =news-1>
-                                          <div class="d-flex ">
-                                            <img  src="" style="padding-right: 5px;" id="news-1-img">
-                                            <p id="news-1-title">Five of top-10 companies add over Rs 1 lakh cr in m-cap; Reliance, TCS lead chart</p>
-                                          <div>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <td id="news-2">
-                                          <div class="d-flex ">
-                                            <img  src="" style="padding-right: 5px;" id="news-2-img">
-                                            <p id="news-2-title">Five of top-10 companies add over Rs 1 lakh cr in m-cap; Reliance, TCS lead chart</p>
-                                          <div>  
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <td id="news-3">
-                                          <div class="d-flex ">
-                                            <img  src="" style="padding-right: 5px;" id="news-3-img">
-                                            <p id="news-3-title">Five of top-10 companies add over Rs 1 lakh cr in m-cap; Reliance, TCS lead chart</p>
-                                          <div>
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <td>
-                                        </td>
-                                      </tr>
+                                     
                                     </tbody>
                                   </table>
                                 </div>
@@ -485,10 +464,10 @@
 
   <!-- End plugin js for this page -->
   <!-- inject:js -->
-  <script src="js/off-canvas.js"></script>
+  <!-- <script src="js/off-canvas.js"></script>
   <script src="js/hoverable-collapse.js"></script>
   <script src="js/template.js"></script>
-  <script src="js/settings.js"></script>
+  <script src="js/settings.js"></script> -->
   
   <!-- endinject -->
   <!-- Custom js for this page-->
@@ -498,6 +477,54 @@
   <script src="js/script.js"></script>
   <!-- End custom js for this page-->
 </body>
+
+<script>
+  let urlString = window.location.href;
+  let url = new URL(urlString);
+  let stock = url.searchParams.get("stock");
+
+  fetch('http://localhost:8080/get-stock/'+stock).then(res=>{
+    return res.json();
+  }).then(res=>{
+    setData(res);
+    setMoreInfo(res["quoteSummary"]["result"]);
+  });
+  let news =
+    [
+        {
+            "uuid": "d45cfb69-8c0a-4768-be2b-3fb09f759950",
+            "title": "Fintech Blockchain Market size to grow by USD 9.34 billion | Market Research Insights highlight The high compatibility with the environment of the financial services industry as Key Driver | Technavio",
+            "description": "/PRNewswire/ -- According to the research report \"Fintech Blockchain Market by Component and Geography - Forecast and Analysis 2021-2025\", the market will...",
+            "url": "https://www.prnewswire.com/news-releases/fintech-blockchain-market-size-to-grow-by-usd-9-34-billion--market-research-insights-highlight-the-high-compatibility-with-the-environment-of-the-financial-services-industry-as-key-driver--technavio-301450751.html",
+            "imageUrl": "https://mma.prnewswire.com/media/1716322/Fintech_Blockchain_Market.jpg?p=facebook",
+            "publishedAt": "2021-12-27T14:00:00.000+00:00"
+        },
+        {
+            "uuid": "9e738920-6ec8-49b7-bc4b-cb12fffcf0b7",
+            "title": "US Holiday Retail Sales Surge As Shoppers Defy Faster Inflation, Covid Uncertainty",
+            "description": "U.S. retail sales surged the most in nearly two decades this holiday season, a major report from Mastercard indicated Sunday, suggesting domestic consumers remain in a buoyant mood despite historic inflation rates and Covid uncertainty.",
+            "url": "https://www.thestreet.com/markets/us-holiday-sales-surge-as-shoppers-defy-inflation-covid-concerns",
+            "imageUrl": "https://www.thestreet.com/.image/t_share/MTY4NjQ4ODU3MDQ3ODY5MDYz/black-friday-kicks-off-the-holiday-shopping-season.jpg",
+            "publishedAt": "2021-12-27T11:52:37.000+00:00"
+        },
+        {
+            "uuid": "f9235ce0-0bc0-449e-a4c0-2556a45d2dfb",
+            "title": "Microsoft Joins Google, Amazon, Others In Canceling In-Person Presence At CES",
+            "description": "Microsoft Corp said on Friday it will not participate in person at the Consumer Electronics Show (CES) 2022 in Las Vegas, joining a list of companies",
+            "url": "https://www.retailnews.asia/microsoft-joins-google-amazon-others-in-canceling-in-person-presence-at-ces/",
+            "imageUrl": "https://135525-391882-2-raikfcquaxqncofqfm.stackpathdns.com/wp-content/uploads/2019/01/amazon.jpg",
+            "publishedAt": "2021-12-27T07:37:43.000+00:00"
+        }
+      ];
+setNews({"news":news});
+  // fetch("http://localhost:8080/news/all?language=en").then(res=>{
+  //   return res.json();
+  // }).then(res=>{
+  //   console.log("res-news",res);
+  //   setNews(res);
+  // });
+  
+</script>
 
 </html>
 

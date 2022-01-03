@@ -44,7 +44,7 @@
                     <label for="exampleInputPassword1">Password</label>
                     <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
                   </div>
-                  <button class="btn btn-primary me-2" onclick="submit()">Submit</button>
+                  <button class="btn btn-primary me-2" onclick="login()">Submit</button>
                   <button class="btn btn-light">Cancel</button>
               
               </div>
@@ -58,37 +58,5 @@
   </div>
   
 </body>
-<script>
-  function submit(){
-    let username = document.getElementById('exampleInputEmail1').value;
-    let password = document.getElementById('exampleInputPassword1').value;
-
-    fetch("http://localhost:8080/login", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        username,password
-      })
-    }).then(data=>{
-      if(data.status == 200){
-        return data.text();
-      }else{
-        alert("Invalid username or password");
-      }
-    }).then(data=>{
-      data = JSON.parse(data);
-      if(data.jwt){
-        // console.log(data);
-        localStorage.setItem("jwt",data.jwt);
-        window.location="../../index.html";
-        
-      }
-      else{
-        alert("Invalid username or password");
-      }
-    });
-  }
-</script>
+<script src = "../../js/auth.js"></script>
 </html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Home </title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="vendors/feather/feather.css">
+  <link rel="stylesheet" href="vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="vendors/typicons/typicons.css">
+  <link rel="stylesheet" href="vendors/simple-line-icons/css/simple-line-icons.css">
+  <link rel="stylesheet" href="vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+  <link rel="stylesheet" href="js/select.dataTables.min.css">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="css/vertical-layout-light/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="images/favicon.png" />
+  <link rel="stylesheet" href="css/progress/progress-bar.css">
+  
+</head>
+<style>
+  .news-div:hover{
+    color: darkblue;
+    background-color: aliceblue;
+  }
+#stock-data{
+  min-height: 100px;
+}
+</style>
+
+<body>
+    <h2 style="text-align: center;margin-top: 10px;" id='main-title'>StockOverflow</h2>
+    <!-- partial:partials/_navbar.html -->
+    <!-- TradingView Widget BEGIN -->
+<!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container" id='tickertape-container'>
+  <div class="tradingview-widget-container__widget"></div>
+  <div class="tradingview-widget-copyright"><a href="https://in.tradingview.com" rel="noopener" target="_blank"></a> </div>
+  
+</div>
+<!-- TradingView Widget END -->
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper" style="padding-top: 0px;">
+      <!-- partial:partials/_settings-panel.html -->
+      
+   
+      <!-- <nav class="sidebar sidebar-offcanvas" id="sidebar">
+
+      </nav> -->
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="home-tab">
+                <div class="tab-content tab-content-basic">
+                  <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview"> 
+                    <div class="row">
+                    </div> 
+
+                    <div class="row">
+                      <div class="col-lg-6 d-flex flex-column">
+                          <div class="card">
+                            <div class="card-body">
+                              
+                              <h4 class="card-title">Market Stats</h4>
+
+                              <div class="table-responsive" id='stock-data'>
+                                <progress id="progress-marketstat" class="pure-material-progress-circular"></progress>
+                                
+                                <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th>Index</th>
+                                      <th>Price.</th>
+                                      <th>Change</th>
+                                      <th>% change</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td>NSE</td>
+                                      <td id="NSE-price"></td>
+                                      <td id="NSE-change"></td>
+                                      <td id="NSE-per-change"></td>
+                                    </tr>
+                                    <tr>
+                                      <td>BSE</td>
+                                      <td id="BSE-price"></td>
+                                      <td id="BSE-change"></td>
+                                      <td id="BSE-per-change"></td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        
+                      </div>
+                      <div class="col-lg-6 d-flex flex-column">
+                        <div class="row flex-grow">
+                          <div class="col-12 grid-margin stretch-card">
+                            <div class="card card-rounded">
+                              <div class="card-body">
+                                <div class="row">
+                                  <div class="col-lg-12">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                      <h4 class="card-title card-title-dash">Wish list</h4>
+                                      <div class="add-items d-flex mb-0">
+                                        <!-- <input type="text" class="form-control todo-list-input" placeholder="What do you need to do today?"> -->
+                                        <button class="add btn btn-icons btn-rounded btn-primary todo-list-add-btn text-white me-0 pl-12p"><i class="mdi mdi-plus" onclick="addToWatchList()"></i></button>
+                                      </div>
+                                    </div>
+                                    <div class="list-wrapper">
+                                      <form autocomplete="off" >
+                                        <label for="city-name">Add Stock</label>
+                                        <input list="city-drop" name="city-name" id="city-name" style="float: right;">
+                                        <datalist id="city-drop">
+                                        </datalist>
+                                    </form>
+                                      <ul class="todo-list todo-list-rounded" id="stock-watchlist">
+                                        
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="col-lg-12 grid-margin stretch-card">
+                        <div class="row flex-grow">
+                          <div class="col-12 grid-margin stretch-card">
+                            <div class="card card-rounded">
+                              <div class="card-body">
+                                <div class="d-sm-flex justify-content-between align-items-start">
+                                  <div>
+                                    <h4 class="card-title card-title-dash">Recent News</h4>
+                                  </div>
+                                </div>
+                                <div class="table-responsive">
+                                  <table class="table" id='news-table'>
+                                    <tbody>
+                                      
+                                    </tbody>
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  
+  <script src="js/script.js" ></script>
+  <script src="js/auth.js"></script>
+  <script>
+    let headers=null;
+    function load_market_stats(){
+      fetch("https://yfapi.net/v6/finance/quote/marketSummary?lang=en&region=IN",{
+        
+      headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': 'bLduyZX4s24TvNfgfhOFG78bIJbcsQlE2ZWs1H20'
+      },
+
+      })
+      .then(res => res.json())
+      .then(data =>{
+        document.getElementById('progress-marketstat').remove();
+        console.log(data["marketSummaryResponse"]["result"]);
+        document.getElementById("NSE-price").innerHTML = data["marketSummaryResponse"]["result"][1]["regularMarketPrice"]["fmt"];
+        document.getElementById("NSE-change").innerHTML = data["marketSummaryResponse"]["result"][1]["regularMarketChange"]["fmt"];
+        document.getElementById("NSE-per-change").innerHTML = data["marketSummaryResponse"]["result"][1]["regularMarketChangePercent"]["fmt"];
+        document.getElementById("BSE-price").innerHTML = data["marketSummaryResponse"]["result"][0]["regularMarketPrice"]["fmt"];
+        document.getElementById("BSE-change").innerHTML = data["marketSummaryResponse"]["result"][0]["regularMarketChange"]["fmt"];
+        document.getElementById("BSE-per-change").innerHTML = data["marketSummaryResponse"]["result"][0]["regularMarketChangePercent"]["fmt"];
+
+
+      });
+    }
+    function load_news(){
+      let headers = getHeader();
+      console.log(headers);
+      fetch("http://localhost:8080/news/all?language=en",{
+        method:'GET',
+        headers:headers
+      }).then(res=>{
+        return res.json();
+      }).then(res=>{
+        console.log("res-news",res);
+        setNews(res);
+      });
+    }
+    async function load_json(str1){
+          let promise = await fetch(str1);
+          let response =  promise.json();
+          return response;
+      }
+      async function populate_stock(){
+        let val = await document.getElementById("city-name").value;
+        let dropdown_element = await document.getElementById("city-drop");
+        let x = await fetch(`https://yfapi.net/v6/finance/autocomplete?region=US&lang=en&query=${val}`,{
+          headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': '4mUViPulPi27UVKxT8b8ZmiCLWB76yM4aZRuKBq0'
+          },
+          })
+          .then(res => res.json())
+          .then(data => {
+            for (let i = 0; i < data["ResultSet"]["Result"].length; i++) {
+            let element = data["ResultSet"]["Result"][i]["name"];
+            let option = document.createElement('option');
+            option.innerHTML = element;
+            option.value = data["ResultSet"]["Result"][i]["symbol"];
+            dropdown_element.appendChild(option);
+        }
+        });
+  }
+  function addToWatchList(){
+    let val = document.getElementById("city-name").value;
+    console.log(val);
+    let name='Apple INC';
+    let list = document.getElementById("stock-watchlist");
+    let li = document.createElement('li');
+    li.innerHTML = `<a href="./index.html?stock=${val}"> ${val}</a>`;
+    list.appendChild(li);
+    saveData(val);
+  }
+  async function getWatchList(){
+      console.log('header');
+      
+      
+      await fetch('http://localhost:8080/watchlist',{
+        method:'GET',
+        headers:headers
+      }).then(res=>{
+        return res.json();
+      }).then(res=>{
+        console.log('watchlist',res);
+        setWatchList(res);
+        tickerTapeSetData([{stockId:"AAPL",name:"Apple Inc."},{stockId:"GOOG",name:"Alphabet Inc."}]);
+      });
+  }
+  
+  async function saveData(val){
+    const name = "Alphabet Inc.";
+    await fetch('http://localhost:8080/watchlist',{
+      method:'POST',
+      headers:headers,
+      body:JSON.stringify({
+        "stockId":val,
+        "name":name
+      })
+    }).then(res=>{
+      
+      return res.text();
+    }).then(res=>{
+      console.log("response: ",res);
+    });
+  }
+
+  window.onload = async function(){
+    headers = await getHeader();
+    console.log('headers:',headers);
+    load_market_stats();
+    load_news();
+    getWatchList();
+    
+    
+  }
+  
+  </script>
+</body>
+
+</html>
+

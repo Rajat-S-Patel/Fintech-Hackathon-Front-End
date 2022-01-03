@@ -22,29 +22,58 @@
   <link rel="stylesheet" href="css/vertical-layout-light/style.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="images/favicon.png" />
+  <link rel="stylesheet" href="css/progress/progress-bar.css">
 </head>
 <style>
   .news-div:hover{
     color: darkblue;
     background-color: aliceblue;
   }
+  #news-table{
+    min-height: 100px;
+  }
+  .line-chart-container{
+    min-height: 100px;
+  }
+  #progress-line-chart{
+    position: absolute; 
+    margin-top: 5%; margin-left: 40%;
+  }
+  #progress-bar-chart{
+    position: absolute;
+    margin-top: 5%;
+    margin-left: 40%;
+  }
+  #progress-news{
+    margin-top: 5%;
+    margin-left: 42%;
+  }
+  #progress-recommendation{
+    margin-left: 50%;
+  }
+  .additional-info *{
+    padding: 3px;
+  }
+  #company-info-container th{
+    padding: 2px;
+  }
 </style>
 <body>
   <div class="container-scroller">
     
     <!-- partial:partials/_navbar.html -->
-    <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">      
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex align-items-top flex-row">      
       <div class="navbar-menu-wrapper d-flex align-items-top"> 
         <ul class="navbar-nav" style="padding-top: 1cm;">
           <li class="nav-item font-weight-semibold d-none d-lg-block ms-0" >
             <h1 class="welcome-text">Stock Name : <span class="text-black fw-bold" id = "stock-name"></span></h1>
-            <h2 class="welcome-sub-text">Company Sector </h2>
+            
           </li>
 
           <li class="nav-item font-weight-semibold d-none d-lg-block ms-0" style="padding-left:22cm ;">
             <h4>Stock Price</h4>
             <h2 class="welcome-text"><span class="text-black fw-bold" id = "stock-price"></span></h2>
-            <h3 class="welcome-sub-text" id = "stock-percentage"></h3>
+            <h3 class="welcome-sub-text text-danger" id = "stock-percentage"></h3>
           </li>
         </ul>
 
@@ -55,185 +84,60 @@
     </nav>
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
-      <!-- partial:partials/_settings-panel.html -->
-      <div class="theme-setting-wrapper">
-        <div id="settings-trigger"><i class="ti-settings"></i></div>
-        <div id="theme-settings" class="settings-panel">
-          <i class="settings-close ti-close"></i>
-          <p class="settings-heading">SIDEBAR SKINS</p>
-          <div class="sidebar-bg-options selected" id="sidebar-light-theme"><div class="img-ss rounded-circle bg-light border me-3"></div>Light</div>
-          <div class="sidebar-bg-options" id="sidebar-dark-theme"><div class="img-ss rounded-circle bg-dark border me-3"></div>Dark</div>
-          <p class="settings-heading mt-2">HEADER SKINS</p>
-          <div class="color-tiles mx-0 px-4">
-            <div class="tiles success"></div>
-            <div class="tiles warning"></div>
-            <div class="tiles danger"></div>
-            <div class="tiles info"></div>
-            <div class="tiles dark"></div>
-            <div class="tiles default"></div>
-          </div>
-        </div>
-      </div>
-      <div id="right-sidebar" class="settings-panel">
-        <i class="settings-close ti-close"></i>
-        <ul class="nav nav-tabs border-top" id="setting-panel" role="tablist">
-          <li class="nav-item">
-            <a class="nav-link active" id="todo-tab" data-bs-toggle="tab" href="#todo-section" role="tab" aria-controls="todo-section" aria-expanded="true">TO DO LIST</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="chats-tab" data-bs-toggle="tab" href="#chats-section" role="tab" aria-controls="chats-section">CHATS</a>
-          </li>
-        </ul>
-        <div class="tab-content" id="setting-content">
-          <div class="tab-pane fade show active scroll-wrapper" id="todo-section" role="tabpanel" aria-labelledby="todo-section">
-            <div class="add-items d-flex px-3 mb-0">
-              <form class="form w-100">
-                <div class="form-group d-flex">
-                  <input type="text" class="form-control todo-list-input" placeholder="Add To-do">
-                  <button type="submit" class="add btn btn-primary todo-list-add-btn" id="add-task">Add</button>
+      <div class="main-panel" style="width: 100%;">
+        <div class="content-wrapper" style="padding-left: 30px;">
+          
+          <div class="row" >
+            <div class="card col-4" style="max-width: 20%;padding: 0px;margin-left: 0px;">
+              
+              <div class="container-fluid" id="company-info-container" style="padding:5px;font: size 2em;">
+                <div >
+                <table class="table-bordered" >
+                  <tbody>
+                  <tr>
+                    <th>sector</th>
+                    <th id="company-sector"></th>                    
+                  </tr>
+                  <tr>
+                    <th>total debt</th>
+                    <th id="total-debt"></th>                    
+                  </tr>
+                  <tr>
+                    <th>total revenue</th>
+                    <th id="total-revenue"></th>
+                  </tr>
+                  <tr>
+                    <th>earning growth</th>
+                    <th id="earning-growth"></th>
+                  </tr>
+                  <tr>
+                    <th>revenue growth</th>
+                    <th id="revenue-growth"></th>
+                  </tr>
+                  <tr>
+                    <th>debt to equity</th>
+                    <th id="debt-to-equity"></th>
+                  </tr>
+                  <tr>
+                    <th>return on equity</th>
+                    <th id="return-on-equity"></th>
+                  </tr>
+                  <tr>
+                    <th>revenue per share</th>
+                    <th id="revenue-per-share"></th>
+                  </tr>
+                  </tbody>
+                </table>
                 </div>
-              </form>
-            </div>
-            <div class="list-wrapper px-3">
-              <ul class="d-flex flex-column-reverse todo-list">
-                <li>
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="checkbox" type="checkbox">
-                      Team review meeting at 3.00 PM
-                    </label>
-                  </div>
-                  <i class="remove ti-close"></i>
-                </li>
-                <li>
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="checkbox" type="checkbox">
-                      Prepare for presentation
-                    </label>
-                  </div>
-                  <i class="remove ti-close"></i>
-                </li>
-                <li>
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="checkbox" type="checkbox">
-                      Resolve all the low priority tickets due today
-                    </label>
-                  </div>
-                  <i class="remove ti-close"></i>
-                </li>
-                <li class="completed">
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="checkbox" type="checkbox" checked>
-                      Schedule meeting for next week
-                    </label>
-                  </div>
-                  <i class="remove ti-close"></i>
-                </li>
-                <li class="completed">
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="checkbox" type="checkbox" checked>
-                      Project review
-                    </label>
-                  </div>
-                  <i class="remove ti-close"></i>
-                </li>
-              </ul>
-            </div>
-            <h4 class="px-3 text-muted mt-5 fw-light mb-0">Events</h4>
-            <div class="events pt-4 px-3">
-              <div class="wrapper d-flex mb-2">
-                <i class="ti-control-record text-primary me-2"></i>
-                <span>Feb 11 2018</span>
+                <h4 class="text-center p-2">About</h4>
+                <p id="company-info" ></p>
               </div>
-              <p class="mb-0 font-weight-thin text-gray">Creating component page build a js</p>
-              <p class="text-gray mb-0">The total number of sessions</p>
             </div>
-            <div class="events pt-4 px-3">
-              <div class="wrapper d-flex mb-2">
-                <i class="ti-control-record text-primary me-2"></i>
-                <span>Feb 7 2018</span>
-              </div>
-              <p class="mb-0 font-weight-thin text-gray">Meeting with Alisa</p>
-              <p class="text-gray mb-0 ">Call Sarah Graves</p>
-            </div>
-          </div>
-          <!-- To do section tab ends -->
-          <div class="tab-pane fade" id="chats-section" role="tabpanel" aria-labelledby="chats-section">
-            <div class="d-flex align-items-center justify-content-between border-bottom">
-              <p class="settings-heading border-top-0 mb-3 pl-3 pt-0 border-bottom-0 pb-0">Friends</p>
-              <small class="settings-heading border-top-0 mb-3 pt-0 border-bottom-0 pb-0 pr-3 fw-normal">See All</small>
-            </div>
-            <ul class="chat-list">
-              <li class="list active">
-                <div class="profile"><img src="images/faces/face1.jpg" alt="image"><span class="online"></span></div>
-                <div class="info">
-                  <p>Thomas Douglas</p>
-                  <p>Available</p>
-                </div>
-                <small class="text-muted my-auto">19 min</small>
-              </li>
-              <li class="list">
-                <div class="profile"><img src="images/faces/face2.jpg" alt="image"><span class="offline"></span></div>
-                <div class="info">
-                  <div class="wrapper d-flex">
-                    <p>Catherine</p>
-                  </div>
-                  <p>Away</p>
-                </div>
-                <div class="badge badge-success badge-pill my-auto mx-2">4</div>
-                <small class="text-muted my-auto">23 min</small>
-              </li>
-              <li class="list">
-                <div class="profile"><img src="images/faces/face3.jpg" alt="image"><span class="online"></span></div>
-                <div class="info">
-                  <p>Daniel Russell</p>
-                  <p>Available</p>
-                </div>
-                <small class="text-muted my-auto">14 min</small>
-              </li>
-              <li class="list">
-                <div class="profile"><img src="images/faces/face4.jpg" alt="image"><span class="offline"></span></div>
-                <div class="info">
-                  <p>James Richardson</p>
-                  <p>Away</p>
-                </div>
-                <small class="text-muted my-auto">2 min</small>
-              </li>
-              <li class="list">
-                <div class="profile"><img src="images/faces/face5.jpg" alt="image"><span class="online"></span></div>
-                <div class="info">
-                  <p>Madeline Kennedy</p>
-                  <p>Available</p>
-                </div>
-                <small class="text-muted my-auto">5 min</small>
-              </li>
-              <li class="list">
-                <div class="profile"><img src="images/faces/face6.jpg" alt="image"><span class="online"></span></div>
-                <div class="info">
-                  <p>Sarah Graves</p>
-                  <p>Available</p>
-                </div>
-                <small class="text-muted my-auto">47 min</small>
-              </li>
-            </ul>
-          </div>
-          <!-- chat tab ends -->
-        </div>
-      </div>
-      <!-- partial -->
-      <!-- partial:partials/_sidebar.html -->
-      <!-- partial -->
-      <div class="main-panel">
-        <div class="content-wrapper">
-          <div class="row" style="padding-left: 5cm;">
-            <div class="col-sm-12">
+            <div class="col-10" style="max-width: 80%; min-width: 60%;">
                 <div class="tab-content tab-content-basic">
                   <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview"> 
                     <div class="row">
+                      
                       <div class="col-sm-12">
                         <h3>Price Summary</h3>
                         <div class="statistics-details d-flex align-items-center justify-content-between">
@@ -265,16 +169,28 @@
                         <div class="row flex-grow">
                           <div class="col-12 col-lg-4 col-lg-12 grid-margin stretch-card">
                             <div class="card card-rounded">
-                              <div class="card-body">
+                              <div class="card-body" id='line-chart-container'>
                                 <div class="d-sm-flex justify-content-between align-items-start">
                                   <div>
-                                   <h4 class="card-title card-title-dash">Performance Line Chart</h4>
+                                   <h4 class="card-title card-title-dash">Open-Close Chart</h4>
                                    <h5 class="card-subtitle card-subtitle-dash">Lorem Ipsum is simply dummy text of the printing</h5>
                                   </div>
-                                  <div id="performance-line-legend"></div>
+                                  <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle toggle-dark btn-lg mb-0 me-0" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Timeline </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                                      <a class="dropdown-item" onclick="changeChartData('1mo','1y')" href="#">1mo - 1y</a>
+                                      <a class="dropdown-item" onclick="changeChartData('1wk','3mo')" href="#">1wk - 3mo</a>
+                                      <a class="dropdown-item" onclick="changeChartData('1wk','6mo')" href="#">1wk - 6mo</a>
+                                      <a class="dropdown-item" onclick="changeChartData('1d','5d')" href="#">1d - 5d</a>
+                                    </div>
+                                  </div>
+                                  <div id="performance-line-legend2"></div>
                                 </div>
+                              
+                                <progress class="pure-material-progress-circular" id='progress-line-chart'></progress>
                                 <div class="chartjs-wrapper mt-5">
-                                  <canvas id="performaneLine"></canvas>
+                                  
+                                  <canvas id="performaneLine2" ></canvas>
                                 </div>
                               </div>
                             </div>
@@ -287,7 +203,7 @@
                             <div class="card card-rounded">
                               <div class="card-body">
                                 <div class="row">
-                                  <div class="col-sm-6">
+                                  <div class="col-sm-6 additional-info">
                                     <h5 style="padding-bottom: 5px;">Additional Information</h5>
                                     <h5 style="opacity: 0.5;">Market Cap</h5>
                                     <h6 id="market-cap"></h6>
@@ -300,7 +216,7 @@
                                     <h5 style="opacity: 0.5;">p/e ratio</h5>
                                     <h6 id="pe-ratio"></h6>
                                   </div>
-                                  <div class="col-sm-6">
+                                  <div class="col-sm-6 additional-info">
                                     <h5 style="padding-bottom: 20px;"></h5>
                                     
                                     <h5 style="opacity: 0.5;">No of Share</h5>
@@ -320,10 +236,74 @@
                           </div>
                         </div>
                       </div>
+                      <!-- @@ -->
+                      <!-- ## VOL PRICE GRAPH -->
+                      <div class="col-lg-8 d-flex flex-column">
+                        <div class="row flex-grow">
+                          <div class="col-12 col-lg-4 col-lg-12 grid-margin stretch-card">
+                            <div class="card card-rounded">
+                              <div class="card-body">
+                                <div class="d-sm-flex justify-content-between align-items-start">
+                                  <div>
+                                   <h4 class="card-title card-title-dash">Volume/Price Chart</h4>
+                                   <h5 class="card-subtitle card-subtitle-dash">Lorem Ipsum is simply dummy text of the printing</h5>
+                                  </div>
+                                  <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle toggle-dark btn-lg mb-0 me-0" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Timeline </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+                                      <a class="dropdown-item" onclick="changeVolPriceChartData('1mo','1y')" href="#">1mo - 1y</a>
+                                      <a class="dropdown-item" onclick="changeVolPriceChartData('1wk','3mo')" href="#">1wk - 3mo</a>
+                                      <a class="dropdown-item" onclick="changeVolPriceChartData('1wk','6mo')" href="#">1wk - 6mo</a>
+                                      <a class="dropdown-item" onclick="changeVolPriceChartData('1d','5d')" href="#">1d - 5d</a>
+                                    </div>
+                                  </div>
+                                  <div style="margin-top: 5px;">
+                                    <label for="volumeRadio"><input type="radio" checked onclick="changeVolPriceGraph('Volume')"  name="vol-price-radio" id="volumeRadio"> Volume</label>
+                                    <br>
+                                    <label for="priceRadio"><input type="radio" onclick="changeVolPriceGraph('Price')" name="vol-price-radio" id="priceRadio"> Price</label>
+                                  </div>
+                                  <div id="performance-line-legend3"></div>
+                                </div>
+                                <progress class="pure-material-progress-circular" id='progress-bar-chart' ></progress>
+
+                                <div class="chartjs-wrapper mt-5">
+                                  <canvas id="performaneLine3"></canvas>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-4 d-flex">
+                        <div class="row flex-grow">
+                          <div class="col-12 grid-margin">
+                            <div class="card card-rounded">
+                              <div class="card-body">
+                                <div class="row">
+                                  <div class="col-lg-12">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                      <h4 class="card-title card-title-dash">Stock Recommendations</h4>
+                                      <div class="add-items d-flex mb-0">
+                                        <!-- <input type="text" class="form-control todo-list-input" placeholder="What do you need to do today?"> -->
+                                      </div>
+                                    </div>
+                                    <div class="list-wrapper">
+                                      <progress class="pure-material-progress-circular" id='progress-recommendation'></progress>
+                                      <ul class="todo-list todo-list-rounded" id='recommendation-list'>
+        
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                     <div class="row">
                       <div class="col-lg-8 d-flex flex-column">
-                        <div class="row flex-grow">
+                        <!-- <div class="row flex-grow">
                           <div class="col-12 grid-margin stretch-card">
                             <div class="card card-rounded">
                               <div class="card-body">
@@ -356,7 +336,7 @@
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </div> -->
                         <div class="row flex-grow">
                           <div class="col-12 grid-margin stretch-card">
                             <div class="card card-rounded">
@@ -367,6 +347,7 @@
                                   </div>
                                 </div>
                                 <div class="table-responsive">
+                                  <progress class="pure-material-progress-circular" id='progress-news'></progress>
                                   <table class="table" id = "news-table">
                                     <tbody>
                                      
@@ -379,67 +360,12 @@
                         </div>
 
                       </div>
-                      <div class="col-lg-4 d-flex">
-                        <div class="row flex-grow">
-                          <div class="col-12 grid-margin">
-                            <div class="card card-rounded">
-                              <div class="card-body">
-                                <div class="row">
-                                  <div class="col-lg-12">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                      <h4 class="card-title card-title-dash">Stock Recommendations</h4>
-                                      <div class="add-items d-flex mb-0">
-                                        <!-- <input type="text" class="form-control todo-list-input" placeholder="What do you need to do today?"> -->
-                                      </div>
-                                    </div>
-                                    <div class="list-wrapper">
-                                      <ul class="todo-list todo-list-rounded">
-                                        <li class="d-block">
-                                          <div class="form-check w-100">
-                                            <label class="form-check-label">
-                                            </label>
-                                            <div class="d-flex mt-2" id="stock-rec-1">
-                                            </div>                                          
-                                        </li>
-                                        <li class="d-block">
-                                          <div class="form-check w-100">
-                                            <label class="form-check-label">
-                                            </label>
-                                            <div class="d-flex mt-2" id="stock-rec-2">
-                                              
-                                            </div>
-                                          </div>
-                                        </li>
-                                        <li>
-                                          <div class="form-check w-100">
-                                            <label class="form-check-label">
-                                            </label>
-                                            <div class="d-flex mt-2" id="stock-rec-3">
-                                              
-                                            </div>
-                                          </div>
-                                        </li>
-                                        <li class="border-bottom-0">
-                                          <div class="form-check w-100">
-                                            <label class="form-check-label">
-                                            </label>
-                                            <div class="d-flex mt-2">
-                                            </div>
-                                          </div>
-                                        </li>
-                                      </ul>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      
                     </div>
                   </div>
                 </div>
               </div>
+              
             </div>
           </div>
         </div>
@@ -475,54 +401,51 @@
   <script src="js/dashboard.js"></script>
   <script src="js/Chart.roundedBarCharts.js"></script>
   <script src="js/script.js"></script>
+  <script src="js/chart-operations.js"></script>
   <!-- End custom js for this page-->
 </body>
-
+<script src="js/auth.js"> </script>
 <script>
+  window.onload = async ()=>{
   let urlString = window.location.href;
   let url = new URL(urlString);
   let stock = url.searchParams.get("stock");
-
-  fetch('http://localhost:8080/get-stock/'+stock).then(res=>{
-    return res.json();
+  let headers =  getHeader();
+  const stockData = await fetch('http://localhost:8080/get-stock/'+stock,{
+    method:'GET',
+    headers:headers
   }).then(res=>{
-    setData(res);
-    setMoreInfo(res["quoteSummary"]["result"]);
+    return res.json();
   });
-  let news =
-    [
-        {
-            "uuid": "d45cfb69-8c0a-4768-be2b-3fb09f759950",
-            "title": "Fintech Blockchain Market size to grow by USD 9.34 billion | Market Research Insights highlight The high compatibility with the environment of the financial services industry as Key Driver | Technavio",
-            "description": "/PRNewswire/ -- According to the research report \"Fintech Blockchain Market by Component and Geography - Forecast and Analysis 2021-2025\", the market will...",
-            "url": "https://www.prnewswire.com/news-releases/fintech-blockchain-market-size-to-grow-by-usd-9-34-billion--market-research-insights-highlight-the-high-compatibility-with-the-environment-of-the-financial-services-industry-as-key-driver--technavio-301450751.html",
-            "imageUrl": "https://mma.prnewswire.com/media/1716322/Fintech_Blockchain_Market.jpg?p=facebook",
-            "publishedAt": "2021-12-27T14:00:00.000+00:00"
-        },
-        {
-            "uuid": "9e738920-6ec8-49b7-bc4b-cb12fffcf0b7",
-            "title": "US Holiday Retail Sales Surge As Shoppers Defy Faster Inflation, Covid Uncertainty",
-            "description": "U.S. retail sales surged the most in nearly two decades this holiday season, a major report from Mastercard indicated Sunday, suggesting domestic consumers remain in a buoyant mood despite historic inflation rates and Covid uncertainty.",
-            "url": "https://www.thestreet.com/markets/us-holiday-sales-surge-as-shoppers-defy-inflation-covid-concerns",
-            "imageUrl": "https://www.thestreet.com/.image/t_share/MTY4NjQ4ODU3MDQ3ODY5MDYz/black-friday-kicks-off-the-holiday-shopping-season.jpg",
-            "publishedAt": "2021-12-27T11:52:37.000+00:00"
-        },
-        {
-            "uuid": "f9235ce0-0bc0-449e-a4c0-2556a45d2dfb",
-            "title": "Microsoft Joins Google, Amazon, Others In Canceling In-Person Presence At CES",
-            "description": "Microsoft Corp said on Friday it will not participate in person at the Consumer Electronics Show (CES) 2022 in Las Vegas, joining a list of companies",
-            "url": "https://www.retailnews.asia/microsoft-joins-google-amazon-others-in-canceling-in-person-presence-at-ces/",
-            "imageUrl": "https://135525-391882-2-raikfcquaxqncofqfm.stackpathdns.com/wp-content/uploads/2019/01/amazon.jpg",
-            "publishedAt": "2021-12-27T07:37:43.000+00:00"
-        }
-      ];
-setNews({"news":news});
-  // fetch("http://localhost:8080/news/all?language=en").then(res=>{
-  //   return res.json();
-  // }).then(res=>{
-  //   console.log("res-news",res);
-  //   setNews(res);
-  // });
+  setData(stockData);
+    
+  const newsData = await fetch("http://localhost:8080/news/all?language=en&symbols="+stock,{
+    method:'GET',
+    headers:headers
+  }).then(res=>{
+    return res.json();
+  });
+  document.getElementById('progress-news').remove();
+  setNews(newsData);
+  const recommendationData = await fetch('http://localhost:8080/recommendation/'+stock,{
+    method:'GET',
+    headers:headers
+  }).then(res=>{
+    return res.json();
+  });
+  console.log('recommendation: ',recommendationData);
+  document.getElementById('progress-recommendation').remove();
+  setRecommendations(recommendationData.finance.result[0].recommendedSymbols);
+  const summaryModules = ["financialData","assetProfile"];
+  const summaryData = await fetch(`http://localhost:8080/get-stock-summary?ticker=${stock}&region=IN&modules=${summaryModules.toString()}`,{
+    method:'GET',
+    headers:headers
+  }).then(res=>{
+    return res.json();
+  });
+  console.log('summary: ',summaryData);
+  setSummaryInfo(summaryData);
+}
   
 </script>
 

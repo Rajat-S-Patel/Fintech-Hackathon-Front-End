@@ -112,21 +112,53 @@
                                 <div class="row">
                                   <div class="col-lg-12">
                                     <div class="d-flex justify-content-between align-items-center">
-                                      <h4 class="card-title card-title-dash">Wish list</h4>
+                                      <h4 class="card-title card-title-dash">Watch list</h4>
                                       <div class="add-items d-flex mb-0">
-                                        <!-- <input type="text" class="form-control todo-list-input" placeholder="What do you need to do today?"> -->
-                                        <button class="add btn btn-icons btn-rounded btn-primary todo-list-add-btn text-white me-0 pl-12p"><i class="mdi mdi-plus" onclick="addToWatchList()"></i></button>
+                                        <form autocomplete="off" >
+                                          <label for="city-name">Add Stock</label>
+                                          <input list="city-drop" id="source" type="text" name="myCountry">
+                                          <datalist id="city-drop">
+                                          </datalist>
+                                        </form>
                                       </div>
                                     </div>
+                                    
                                     <div class="list-wrapper">
-                                      <form autocomplete="off" >
-                                        <label for="city-name">Add Stock</label>
-                                        <input list="city-drop" name="city-name" id="city-name" style="float: right;">
-                                        <datalist id="city-drop">
-                                        </datalist>
-                                    </form>
+                                      
                                       <ul class="todo-list todo-list-rounded" id="stock-watchlist">
-                                        
+                                        <div style = "float: right;padding-top: 10px;">
+                                          <button class=" btn btn-icons btn-rounded btn-secondary"><i class="mdi mdi-delete" onclick=""></i></button>
+                                        </div>
+                                        <li>
+                                          <div class="form-check">
+                                          <label class="form-check-label">
+                                            <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="">
+                                              company name
+                                          <i class="input-helper"></i></label>
+                                        </div>
+                                      </li>
+                                      <div style = "float: right;padding-top: 10px;">
+                                        <button " class=" btn btn-icons btn-rounded btn-secondary"><i class="mdi mdi-delete" onclick=""></i></button>
+                                      </div>
+                                      <li>
+                                        <div class="form-check">
+                                        <label class="form-check-label">
+                                          <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="">
+                                          Company Name
+                                        <i class="input-helper"></i></label>
+                                      </div>
+                                    </li>
+                                    <div style = "float: right;padding-top: 10px;">
+                                      <button " class=" btn btn-icons btn-rounded btn-secondary"><i class="mdi mdi-delete" onclick=""></i></button>
+                                    </div>                                    
+                                    <li>
+                                      <div class="form-check">
+                                      <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="">
+                                        Company Name
+                                      <i class="input-helper"></i></label>
+                                    </div>
+                                  </li>
                                       </ul>
                                     </div>
                                   </div>
@@ -178,6 +210,7 @@
   
   <script src="js/script.js" ></script>
   <script src="js/auth.js"></script>
+  <script src="js/autocomplete.js"></script>
   <script>
     let headers=null;
     function load_market_stats(){
@@ -241,6 +274,7 @@
         }
         });
   }
+
   function addToWatchList(){
     let val = document.getElementById("city-name").value;
     console.log(val);

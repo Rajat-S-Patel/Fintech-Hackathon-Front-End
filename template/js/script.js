@@ -167,7 +167,7 @@ function setTechnicalWidget(stock){
 function getWatchListElement(stock){
     let li = document.createElement('li');
     li.innerHTML = `
-    <div class="container-fluid watchlist-item" id=${stock.stockId} >
+    <div class="container-fluid watchlist-item" id=${stock.stockId} onclick=window.location.href="index.html?stock=${stock.stockId}" >
       <input type="checkbox" class="form-check-input"  name="optionsRadios" id="optionsRadios1" value="">
       <label class="form-check-label">${stock.name + ' (' + stock.stockId + ')'}</label>
       <div style = "float:right;">

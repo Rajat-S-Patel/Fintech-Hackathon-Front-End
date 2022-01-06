@@ -24,6 +24,7 @@
   <link rel="shortcut icon" href="images/favicon.png" />
   <link rel="stylesheet" href="css/progress/progress-bar.css">
   
+  
 </head>
 <style>
   .news-div:hover{
@@ -33,6 +34,28 @@
 #stock-data{
   min-height: 100px;
 }
+#stock-watchlist{
+  margin-top: 10px;
+  min-height: 200px; 
+  max-height: 200px;
+  overflow: scroll;
+}
+.watchlist-item{
+  padding-left: 3px;
+}
+.watchlist-item label{
+  margin-left: 10px; 
+}
+.watchlist-item input{
+  margin-top:6px;
+}
+#watchlist-input, #watchlist-input:focus{
+  width: 100%;
+  border: solid gray 1px;
+}
+
+
+
 </style>
 
 <body>
@@ -55,7 +78,7 @@
 
       </nav> -->
       <!-- partial -->
-      <div class="main-panel">
+      <div class="main-panel" style="width: 100%;">
         <div class="content-wrapper">
           <div class="row">
             <div class="col-sm-12">
@@ -108,25 +131,25 @@
                         <div class="row flex-grow">
                           <div class="col-12 grid-margin stretch-card">
                             <div class="card card-rounded">
-                              <div class="card-body">
+                              <div class="card-body" >
                                 <div class="row">
                                   <div class="col-lg-12">
                                     <div class="d-flex justify-content-between align-items-center">
-                                      <h4 class="card-title card-title-dash">Wish list</h4>
+                                      <h4 class="card-title card-title-dash">Watch List</h4>
                                       <div class="add-items d-flex mb-0">
                                         <!-- <input type="text" class="form-control todo-list-input" placeholder="What do you need to do today?"> -->
                                         <button class="add btn btn-icons btn-rounded btn-primary todo-list-add-btn text-white me-0 pl-12p"><i class="mdi mdi-plus" onclick="addToWatchList()"></i></button>
                                       </div>
                                     </div>
-                                    <div class="list-wrapper">
-                                      <form autocomplete="off" >
-                                        <label for="city-name">Add Stock</label>
-                                        <input list="city-drop" name="city-name" id="city-name" style="float: right;">
-                                        <datalist id="city-drop">
-                                        </datalist>
+                                    <form autocomplete="off" >
+                                      
+                                      <input  list="city-drop" id="watchlist-input" placeholder="Enter stock name/ticker" type="text" name="myCountry">
+                                      <datalist id="city-drop"> </datalist>
                                     </form>
+                                    <div class="list-wrapper">
+                                      
                                       <ul class="todo-list todo-list-rounded" id="stock-watchlist">
-                                        
+                                       
                                       </ul>
                                     </div>
                                   </div>
@@ -136,7 +159,35 @@
                           </div>
                         </div>
                       </div>
-                      
+                      <div class="col-lg-8 d-flex flex-column">
+                        <div class="row flex-grow">
+                          <div class="col-12 col-lg-4 col-lg-12 grid-margin stretch-card">
+                            <div class="card card-rounded">
+                              <div class="card-body">
+                                <div class="d-sm-flex justify-content-between align-items-start">
+                                  <div>
+                                   <h4 class="card-title card-title-dash">Watchlist Comparision Chart</h4>
+                                   <h5 class="card-subtitle card-subtitle-dash"><span id="watchlistMeta"></span></h5>
+                                  </div>
+                                  <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle toggle-dark btn-lg mb-0 me-0" type="button" id="dropdownMenuButton4" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Timeline </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
+                                      <a class="dropdown-item" onclick="changeCompChart('1mo','1y')" href="#">1mo - 1y</a>
+                                      <a class="dropdown-item" onclick="changeCompChart('1wk','3mo')" href="#">1wk - 3mo</a>
+                                      <a class="dropdown-item" onclick="changeCompChart('1wk','6mo')" href="#">1wk - 6mo</a>
+                                      <a class="dropdown-item" onclick="changeCompChart('1d','5d')" href="#">1d - 5d</a>
+                                    </div>
+                                  </div>
+                                  <div id="performance-line-legend4"></div>
+                                </div>
+                                <div class="chartjs-wrapper mt-5">
+                                  <canvas id="performaneLine4"></canvas>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                       <div class="col-lg-12 grid-margin stretch-card">
                         <div class="row flex-grow">
                           <div class="col-12 grid-margin stretch-card">
@@ -175,9 +226,19 @@
     </div>
     <!-- page-body-wrapper ends -->
   </div>
-  
-  <script src="js/script.js" ></script>
+<script src="js/settings.js"></script>
+<!-- plugins:js -->
+  <script src="vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="vendors/chart.js/Chart.min.js"></script>
+  <script src="vendors/progressbar.js/progressbar.min.js"></script>
+  <script src="js/jquery.cookie.js" type="text/javascript"></script>
+  <script src="js/script.js"></script>
   <script src="js/auth.js"></script>
+  <script src="js/autocomplete.js"></script>
+ 
+  <script src="js/watchlist-chart.js"></script>
   <script>
     let headers=null;
     function load_market_stats(){
@@ -185,7 +246,7 @@
         
       headers: {
       'Content-Type': 'application/json',
-      'x-api-key': 'bLduyZX4s24TvNfgfhOFG78bIJbcsQlE2ZWs1H20'
+      'x-api-key': 'UwQbIKPqAWaYOz5MtbUTe8Dqg7hmTPIu8mTlM5Zi'
       },
 
       })
@@ -221,35 +282,29 @@
           let response =  promise.json();
           return response;
       }
-      async function populate_stock(){
-        let val = await document.getElementById("city-name").value;
-        let dropdown_element = await document.getElementById("city-drop");
-        let x = await fetch(`https://yfapi.net/v6/finance/autocomplete?region=US&lang=en&query=${val}`,{
-          headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': '4mUViPulPi27UVKxT8b8ZmiCLWB76yM4aZRuKBq0'
-          },
-          })
-          .then(res => res.json())
-          .then(data => {
-            for (let i = 0; i < data["ResultSet"]["Result"].length; i++) {
-            let element = data["ResultSet"]["Result"][i]["name"];
-            let option = document.createElement('option');
-            option.innerHTML = element;
-            option.value = data["ResultSet"]["Result"][i]["symbol"];
-            dropdown_element.appendChild(option);
-        }
-        });
-  }
+  
   function addToWatchList(){
-    let val = document.getElementById("city-name").value;
+    let val = document.getElementById("watchlist-input").value;
     console.log(val);
-    let name='Apple INC';
+    let ticker = val.slice(val.indexOf('(')+1,val.indexOf(')'));
+    let name = val.slice(0,val.indexOf('('));
+    `
+    <li style="width: 100%;">
+        <div class="container-fluid watchlist-item">
+          <input type="radio" class="form-check-input"  name="optionsRadios" id="optionsRadios1" value="">
+          <label class="form-check-label">AAPL</label>
+          
+          <div style = "float:right;">
+            <button class=" btn btn-icons btn-rounded btn-secondary"><i class="mdi mdi-delete" onclick=""></i></button>
+          </div>
+        </div>
+    </li>
+    `
     let list = document.getElementById("stock-watchlist");
-    let li = document.createElement('li');
-    li.innerHTML = `<a href="./index.html?stock=${val}"> ${val}</a>`;
+    let li = getWatchListElement({stockId:ticker,name});
+
     list.appendChild(li);
-    saveData(val);
+    saveData({stockId:ticker,name});
   }
   async function getWatchList(){
       console.log('header');
@@ -263,19 +318,25 @@
       }).then(res=>{
         console.log('watchlist',res);
         setWatchList(res);
-        tickerTapeSetData([{stockId:"AAPL",name:"Apple Inc."},{stockId:"GOOG",name:"Alphabet Inc."}]);
+        tickerTapeSetData(res);
       });
   }
-  
-  async function saveData(val){
-    const name = "Alphabet Inc.";
+  async function deleteStock(event){
+    let parentDiv = event.currentTarget.parentElement.parentElement;
+    let stockId = parentDiv.id;
+    console.log('stockId',parentDiv);
+    await fetch('http://localhost:8080/watchlist/'+stockId,{
+      method:'DELETE',
+      headers:headers
+    }).then(res=> res.json());
+    parentDiv.parentElement.remove();
+  }
+  async function saveData(stock){
+    
     await fetch('http://localhost:8080/watchlist',{
       method:'POST',
       headers:headers,
-      body:JSON.stringify({
-        "stockId":val,
-        "name":name
-      })
+      body:JSON.stringify(stock)
     }).then(res=>{
       
       return res.text();

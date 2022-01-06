@@ -111,10 +111,8 @@ function setWatchList(data){
     let ul = document.getElementById('stock-watchlist');
     
     for(let stock of data){
-        let li = document.createElement('li');
-        li.innerHTML = `<a href = 'index.html?stock=${stock}' class="d-flex">
-        <label class="form-check-label">${stock}</label>
-        </a>`;
+        console.log('stock: ',stock);
+        let li = getWatchListElement(stock);
         ul.appendChild(li);
     }
 }
@@ -122,15 +120,16 @@ function setWatchList(data){
 function tickerTapeSetData(data){
     
     let symbols = [];
+   
     for(x of data){
         symbols.push({proName:x.stockId,title:x.name});
     }
     
     
-    let script = document.createElement('script');
-    script.src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js";
-    script.async=true;
-    script.innerHTML=
+    let tickerScript = document.createElement('script');
+    tickerScript.src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js";
+    tickerScript.async=true;
+    tickerScript.innerHTML=
     `{
         "symbols":`+ JSON.stringify(symbols) +`,
         "showSymbolLogo": true,
@@ -141,5 +140,48 @@ function tickerTapeSetData(data){
         "locale": "in"
     }
     `;
-    document.getElementById('tickertape-container').appendChild(script);
+    
+    document.getElementById('tickertape-container').appendChild(tickerScript);
 }
+function setTechnicalWidget(stock){
+    let technicalScript = document.createElement('script');
+    technicalScript.src="https://s3.tradingview.com/external-embedding/embed-widget-technical-analysis.js";
+    technicalScript.async=true;
+    console.log('stock:',stock);
+    technicalScript.innerHTML=`
+    {
+        "interval": "1m",
+        "width": 340,
+        "isTransparent": false,
+        "height": 450,
+        "symbol": "NASDAQ:${stock}",
+        "showIntervalTabs": true,
+        "locale": "in",
+        "colorTheme": "light"
+    }
+    `;
+    document.getElementById('technical-widget-container').appendChild(technicalScript);
+
+}
+
+function getWatchListElement(stock){
+    let li = document.createElement('li');
+    li.innerHTML = `
+    <div class="container-fluid watchlist-item" id=${stock.stockId} >
+      <input type="checkbox" class="form-check-input"  name="optionsRadios" id="optionsRadios1" value="">
+      <label class="form-check-label">${stock.name + ' (' + stock.stockId + ')'}</label>
+      <div style = "float:right;">
+        <button class=" btn btn-icons btn-rounded btn-secondary" onclick="deleteStock(event)"><i class="mdi mdi-delete" onclick=""></i></button>
+      </div>
+    </div>
+    `;
+    return li;
+}
+
+async function getTrendingStocks(region="US"){
+    const trendingStocks = await fetch('http://localhost:8080/get-trending-stocks/'+region)
+    .then(response => response.json())
+
+    return trendingStocks;
+}
+

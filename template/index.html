@@ -73,7 +73,7 @@
           <li class="nav-item font-weight-semibold d-none d-lg-block ms-0" style="padding-left:22cm ;">
             <h4>Stock Price</h4>
             <h2 class="welcome-text"><span class="text-black fw-bold" id = "stock-price"></span></h2>
-            <h3 class="welcome-sub-text text-danger" id = "stock-percentage"></h3>
+            <h3 class="welcome-sub-text" id = "stock-percentage"></h3>
           </li>
         </ul>
 
@@ -90,46 +90,48 @@
           <div class="row" >
             <div class="card col-4" style="max-width: 20%;padding: 0px;margin-left: 0px;">
               
-              <div class="container-fluid" id="company-info-container" style="padding:5px;font: size 2em;">
-                <div >
-                <table class="table-bordered" >
+              <div class="container-fluid" id="company-info-container" style="padding:5px;font-size:2em;">
+                <h4 class="text-center p-2">About</h4>
+                
+                <div>
+                <table class="table" >
                   <tbody>
                   <tr>
-                    <th>sector</th>
-                    <th id="company-sector"></th>                    
+                    <td>sector</td>
+                    <td id="company-sector"></td>                    
                   </tr>
                   <tr>
-                    <th>total debt</th>
-                    <th id="total-debt"></th>                    
+                    <td>total debt</td>
+                    <td id="total-debt"></td>                    
                   </tr>
                   <tr>
-                    <th>total revenue</th>
-                    <th id="total-revenue"></th>
+                    <td>total revenue</td>
+                    <td id="total-revenue"></td>
                   </tr>
                   <tr>
-                    <th>earning growth</th>
-                    <th id="earning-growth"></th>
+                    <td>earning growth</td>
+                    <td id="earning-growth"></td>
                   </tr>
                   <tr>
-                    <th>revenue growth</th>
-                    <th id="revenue-growth"></th>
+                    <td>revenue growth</td>
+                    <td id="revenue-growth"></td>
                   </tr>
                   <tr>
-                    <th>debt to equity</th>
-                    <th id="debt-to-equity"></th>
+                    <td>debt to equity</td>
+                    <td id="debt-to-equity"></td>
                   </tr>
                   <tr>
-                    <th>return on equity</th>
-                    <th id="return-on-equity"></th>
+                    <td>return on equity</td>
+                    <td id="return-on-equity"></td>
                   </tr>
                   <tr>
-                    <th>revenue per share</th>
-                    <th id="revenue-per-share"></th>
+                    <td>revenue per share</td>
+                    <td id="revenue-per-share"></td>
                   </tr>
                   </tbody>
                 </table>
                 </div>
-                <h4 class="text-center p-2">About</h4>
+                <h4 class="text-center p-2">Description</h4>
                 <p id="company-info" ></p>
               </div>
             </div>
@@ -279,22 +281,12 @@
                           <div class="col-12 grid-margin">
                             <div class="card card-rounded">
                               <div class="card-body">
-                                <div class="row">
-                                  <div class="col-lg-12">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                      <h4 class="card-title card-title-dash">Stock Recommendations</h4>
-                                      <div class="add-items d-flex mb-0">
-                                        <!-- <input type="text" class="form-control todo-list-input" placeholder="What do you need to do today?"> -->
-                                      </div>
-                                    </div>
-                                    <div class="list-wrapper">
-                                      <progress class="pure-material-progress-circular" id='progress-recommendation'></progress>
-                                      <ul class="todo-list todo-list-rounded" id='recommendation-list'>
-        
-                                      </ul>
-                                    </div>
-                                  </div>
-                                </div>
+                              <!-- TradingView Widget BEGIN -->
+                              <div class="tradingview-widget-container">
+                                <div class="tradingview-widget-container__widget" id="technical-widget-container"></div>
+                                
+                              </div>
+                              <!-- TradingView Widget END -->
                               </div>
                             </div>
                           </div>
@@ -303,40 +295,7 @@
                     </div>
                     <div class="row">
                       <div class="col-lg-8 d-flex flex-column">
-                        <!-- <div class="row flex-grow">
-                          <div class="col-12 grid-margin stretch-card">
-                            <div class="card card-rounded">
-                              <div class="card-body">
-                                <div class="d-sm-flex justify-content-between align-items-start">
-                                  <div>
-                                    <h4 class="card-title card-title-dash">Market Overview</h4>
-                                   <p class="card-subtitle card-subtitle-dash">Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
-                                  </div>
-                                  <div>
-                                    <div class="dropdown">
-                                      <button class="btn btn-secondary dropdown-toggle toggle-dark btn-lg mb-0 me-0" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> This month </button>
-                                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                                        <h6 class="dropdown-header">Settings</h6>
-                                        <a class="dropdown-item" href="#">Action</a>
-                                        <a class="dropdown-item" href="#">Another action</a>
-                                        <a class="dropdown-item" href="#">Something else here</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Separated link</a>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="d-sm-flex align-items-center mt-1 justify-content-between">
-                                  <div class="d-sm-flex align-items-center mt-4 justify-content-between"><h2 class="me-2 fw-bold">$36,2531.00</h2><h4 class="me-2">USD</h4><h4 class="text-success">(+1.37%)</h4></div>
-                                  <div class="me-3"><div id="marketing-overview-legend"></div></div>
-                                </div>
-                                <div class="chartjs-bar-wrapper mt-3">
-                                  <canvas id="marketingOverview"></canvas>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div> -->
+                      
                         <div class="row flex-grow">
                           <div class="col-12 grid-margin stretch-card">
                             <div class="card card-rounded">
@@ -359,6 +318,32 @@
                           </div>
                         </div>
 
+                      </div>
+                      <div class="col-lg-4 d-flex">
+                        <div class="row flex-grow">
+                          <div class="col-12 grid-margin">
+                            <div class="card card-rounded">
+                              <div class="card-body">
+                                <div class="row">
+                                  <div class="col-lg-12">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                      <h4 class="card-title card-title-dash">Stock Recommendations</h4>
+                                      <div class="add-items d-flex mb-0">
+                                        <!-- <input type="text" class="form-control todo-list-input" placeholder="What do you need to do today?"> -->
+                                      </div>
+                                    </div>
+                                    <div class="list-wrapper">
+                                      <progress class="pure-material-progress-circular" id='progress-recommendation'></progress>
+                                      <ul class="todo-list todo-list-rounded" id='recommendation-list'>
+        
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                       
                     </div>
@@ -445,7 +430,9 @@
   });
   console.log('summary: ',summaryData);
   setSummaryInfo(summaryData);
+  setTechnicalWidget(stock);
 }
+
   
 </script>
 

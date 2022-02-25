@@ -167,6 +167,7 @@ async function handlingGraph(){
             fontSize: 10,
             color: "#6B778C"
           }
+          
         }],
       },
       legend: false,

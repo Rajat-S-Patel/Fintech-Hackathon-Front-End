@@ -23,7 +23,8 @@
   <!-- endinject -->
   <link rel="shortcut icon" href="images/favicon.png" />
   <link rel="stylesheet" href="css/progress/progress-bar.css">
-  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
   
 </head>
 <style>
@@ -36,8 +37,8 @@
 }
 #stock-watchlist{
   margin-top: 10px;
-  min-height: 200px; 
-  max-height: 200px;
+  min-height: 170px; 
+  max-height: 170px;
   overflow: scroll;
 }
 .watchlist-item{
@@ -59,7 +60,29 @@
 </style>
 
 <body>
-    <h2 style="text-align: center;margin-top: 10px;" id='main-title'>StockOverflow</h2>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <h2 class="navbar-brand" href="#" style="text-align: center;margin-left: 30%;font-size: 30px;">StockOverFlow</h2>
+      <div class="container-fluid d-flex">
+          
+        <input autocomplete="off" class="form-control mr-sm-2" list="stock-drop" id="search-input" name="search-input" type="search" placeholder="Search" aria-label="Search">
+        <datalist id="stock-drop"> </datalist>
+        <button class="btn btn-success" style="height: 40px;" onclick="search(event)">Search </button>
+
+
+        <div style="float: right;" >
+          <h5 style="padding-right: 10px;" id="username" ></h5>
+          <button class="btn btn-outline-danger my-2 my-sm-0"  onclick="logout()">Logout </button>
+        </div>
+      </div>
+      
+    </div>
+  </nav>
+  
     <!-- partial:partials/_navbar.html -->
     <!-- TradingView Widget BEGIN -->
 <!-- TradingView Widget BEGIN -->
@@ -159,11 +182,12 @@
                           </div>
                         </div>
                       </div>
+
                       <div class="col-lg-8 d-flex flex-column">
                         <div class="row flex-grow">
-                          <div class="col-12 col-lg-4 col-lg-12 grid-margin stretch-card">
-                            <div class="card card-rounded">
-                              <div class="card-body">
+                          <div class="col-12 col-lg-4 col-lg-12 grid-margin">
+                            <div class="card card-rounded" style="width: 1300px;height: 535px;">
+                              <div class="card-body" style="width: 1200px;height: 650px;">
                                 <div class="d-sm-flex justify-content-between align-items-start">
                                   <div>
                                    <h4 class="card-title card-title-dash">Watchlist Comparision Chart</h4>
@@ -180,7 +204,7 @@
                                   </div>
                                   <div id="performance-line-legend4"></div>
                                 </div>
-                                <div class="chartjs-wrapper mt-5">
+                                <div class="chartjs-wrapper mt-5" style="width: 1200px;height: 650px;">
                                   <canvas id="performaneLine4"></canvas>
                                 </div>
                               </div>
@@ -246,7 +270,7 @@
         
       headers: {
       'Content-Type': 'application/json',
-      'x-api-key': 'UwQbIKPqAWaYOz5MtbUTe8Dqg7hmTPIu8mTlM5Zi'
+      'x-api-key': 'gaTwKeugSDIAeHd6ahRA3Eday9su6d555DL4ELw9'
       },
 
       })
@@ -318,10 +342,11 @@
       }).then(res=>{
         console.log('watchlist',res);
         setWatchList(res);
-        tickerTapeSetData(res);
+        // tickerTapeSetData(res);
       });
   }
   async function deleteStock(event){
+    event.stopPropagation();
     let parentDiv = event.currentTarget.parentElement.parentElement;
     let stockId = parentDiv.id;
     console.log('stockId',parentDiv);
@@ -344,19 +369,37 @@
       console.log("response: ",res);
     });
   }
+  async function getTrendingStocks(){
+    await fetch('http://localhost:8080/get-trending-stocks/US',{
+      method:'GET'
+    })
+    .then(res=>res.json())
+    .then(res=>{
+        console.log('trendingstocks',res);
+        tickerTapeSetData(res);
+    });
+  }
 
+  function search(event){
+    let stock = document.getElementById('search-input').value;
+    let ticker = stock.slice(stock.indexOf("(")+1,stock.indexOf(")"));
+    window.location.href = "index.html?stock="+ticker;
+  }
   window.onload = async function(){
     headers = await getHeader();
     console.log('headers:',headers);
     load_market_stats();
     load_news();
+    getTrendingStocks();
     getWatchList();
-    
-    
+    getUserName();
+    document.getElementById('search-input').value="";
   }
   
   </script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 
 </html>
-

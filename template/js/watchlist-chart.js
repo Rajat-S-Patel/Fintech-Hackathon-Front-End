@@ -5,14 +5,18 @@ var graphGradient4 = document.getElementById("performaneLine4").getContext('2d')
 var graphGradient42 = document.getElementById("performaneLine4").getContext('2d');
 var saleGradientBg4 = graphGradient4.createLinearGradient(5, 0, 5, 100);
 var saleGradientBg42 = graphGradient42.createLinearGradient(100, 0, 50, 150);
+let stocks = [];
 
 async function fetchingData(interval, range) {
     let data = null;
+    let path = setPath();
+    if(path == "") path="AAPL?comparisons=MSFT%2C%5EVIX%2CDELL";
+
     await fetch(
-        'https://yfapi.net/v8/finance/chart/AAPL?comparisons=MSFT%2C%5EVIX%2CDELL&range='+range+'&region=IN&interval='+interval+'&lang=en&events=div%2Csplit',{
+        'https://yfapi.net/v8/finance/chart/'+path+'&range='+range+'&region=IN&interval='+interval+'&lang=en&events=div%2Csplit',{
         headers:{
             'Content-Type':'application/json',
-            'X-API-KEY': '6m0izNvXfl44kTdhKLHq657NyIskVggs2hTOIQPk'
+            'X-API-KEY': 'gaTwKeugSDIAeHd6ahRA3Eday9su6d555DL4ELw9'
         }}
         // '../temp/chart-data.json'
     ).then(
@@ -88,11 +92,41 @@ async function comparisionGraph() {
         var salesTop = await new Chart(graphGradient4, {
             type: 'line',
             data: configComparisionData(),
+            options:{
+                responsive:true,
+                aspectRatio:4
+            }
         });
+        
         cg = await salesTop;
         console.log(salesTop);
         document.getElementById('performance-line-legend4').innerHTML = salesTop.generateLegend();
     }
+}
+function setPath(){
+    // AAPL?comparisons=
+    if(stocks.length == 0) return "";
+    let path = stocks[0]+"?comparisons=";
+    for(let i=1;i<stocks.length;i++) path+=stocks[i]+",";
+    return path;
+}
+async function stockAdded(){
+    let path = setPath();
+    cgData = await fetchingData('1mo', '1y');
+    if (cg != null)
+        handlingCompareGraph();
+}
+function addToCompare(event){
+    event.stopPropagation();
+    let target = event.currentTarget;
+    let stock = target.id;
+    if(target.checked && stocks.indexOf(stock)== -1){
+        stocks.push(stock);
+    }
+    else{
+        stocks.splice(stocks.indexOf(stock),1);
+    }
+    stockAdded();
 }
 
 (function ($) {

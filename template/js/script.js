@@ -121,10 +121,12 @@ function tickerTapeSetData(data){
     
     let symbols = [];
    
-    for(x of data){
-        symbols.push({proName:x.stockId,title:x.name});
+    // for(x of data){
+    //     symbols.push({proName:x.stockId,title:x.name});
+    // }
+    for(x of data.quoteResponse.result){
+        symbols.push({proName:x.symbol,title:x.longName});
     }
-    
     
     let tickerScript = document.createElement('script');
     tickerScript.src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js";
@@ -136,7 +138,6 @@ function tickerTapeSetData(data){
         "colorTheme": "light",
         "isTransparent": true,
         "displayMode": "adaptive",
-        "largeChartUrl": "http://index.html?stock=AAPL",
         "locale": "in"
     }
     `;
@@ -166,10 +167,11 @@ function setTechnicalWidget(stock){
 
 function getWatchListElement(stock){
     let li = document.createElement('li');
+    // onclick=window.location.href='index.html?stock=${stock.stockId}'
     li.innerHTML = `
-    <div class="container-fluid watchlist-item" id=${stock.stockId} onclick=window.location.href="index.html?stock=${stock.stockId}" >
-      <input type="checkbox" class="form-check-input"  name="optionsRadios" id="optionsRadios1" value="">
-      <label class="form-check-label">${stock.name + ' (' + stock.stockId + ')'}</label>
+    <div class="container-fluid watchlist-item" id=${stock.stockId}  >
+      <input id =${stock.stockId} type="checkbox" class="form-check-input" style="margin-left:2px; margin-top:4px;" name="optionsRadios" value="" onchange=addToCompare(event) >
+      <label class="form-check-label" style="margin-left:20px;">${stock.name + ' (' + stock.stockId + ')'}</label>
       <div style = "float:right;">
         <button class=" btn btn-icons btn-rounded btn-secondary" onclick="deleteStock(event)"><i class="mdi mdi-delete" onclick=""></i></button>
       </div>
